@@ -1,0 +1,11 @@
+{
+  "name": "kstack",
+  "displayName": "KStack",
+  "description": "Personal engineering skills for sandbox repos: explore, explain history, check blast radius, test first, clean up and write.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Keith Wickramasekara"
+  },
+  "license": "MIT",
+  "keywords": ["engineering", "exploration", "history", "verification", "writing"]
+}

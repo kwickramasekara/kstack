@@ -1,0 +1,14 @@
+{
+  "name": "kstack",
+  "description": "Personal plugin marketplace.",
+  "owner": {
+    "name": "kstack"
+  },
+  "plugins": [
+    {
+      "name": "kstack",
+      "source": "./",
+      "description": "Personal engineering skills for sandbox repos: explore, explain history, check blast radius, test first, clean up and write."
+    }
+  ]
+}
