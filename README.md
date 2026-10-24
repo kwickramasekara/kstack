@@ -80,7 +80,7 @@ The principles live in `principles/`, one file each, with their triggers in `pri
 | `gpt-adversary` | GPT (opencode) | yes | yes | Tries to break the work. Code: correctness, what breaks outside the diff, data, races, performance, auth and injection, temporary code, failure handling. Plans: premise, assumptions, failure modes, contracts and operations, step order |
 | `code-smells` | Sonnet | no | yes | Fowler's smells and the refactorings that remove them, plus the repo's own smells the config names |
 
-The GPT reviewer runs the opencode `kstack-adversary` agent from `opencode/agents/kstack-adversary.md`, with the model from the repo's config. Its config denies edits, and its prompt keeps the rest read-only. Link it into opencode once per computer:
+The GPT reviewer runs the opencode `kstack-adversary` agent from `opencode/agents/kstack-adversary.md`, with the model from the repo's config. Its config denies edits, and its prompt keeps the rest read-only. It is a hidden primary agent: `opencode run --agent` can use it, and opencode's agent switcher does not show it. Do not make it a subagent: `opencode run` falls back to the default agent for those. Link it into opencode once per computer:
 
 ```bash
 ln -s <path to kstack>/opencode/agents/kstack-adversary.md ~/.config/opencode/agents/kstack-adversary.md

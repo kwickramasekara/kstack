@@ -1,6 +1,7 @@
 ---
 description: Adversarial reviewer for a design plan or a code change. Tries to prove the work is wrong. Read-only.
 mode: primary
+hidden: true
 permission:
   edit: deny
 color: error
