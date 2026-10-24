@@ -8,7 +8,7 @@
     {
       "name": "kstack",
       "source": "./",
-      "description": "Personal engineering skills for sandbox repos: explore, explain history, check blast radius, test first, clean up and write."
+      "description": "Personal engineering workflows for any repo: cruise-control playbooks from ticket to commit, adversarial review, decisions, principles, and skills to explore, explain history, check blast radius, test first, clean up and write."
     }
   ]
 }

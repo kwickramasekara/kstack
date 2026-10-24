@@ -1,6 +1,6 @@
 ---
 name: why
-description: "Use for 'why does X work this way', 'why we picked Y', design rationale, regressions, postmortems, or data-backed thresholds. Queries each evidence category (source control, Linear, in-repo docs, and sources the repo's AGENTS.md names) in parallel, then returns a cited read on decisions and tradeoffs. Use how for runtime behavior."
+description: "Use for 'why does X work this way', 'why we picked Y', design rationale, regressions, postmortems, or data-backed thresholds. Queries each evidence category (source control, the issue tracker, in-repo docs, and sources the repo's kstack config names) in parallel, then returns a cited read on decisions and tradeoffs. Use how for runtime behavior."
 ---
 
 # Why
@@ -11,7 +11,7 @@ Companion to the `how` skill. `how` answers what the code does and how it works.
 
 ## How this skill works
 
-Historical context spreads across three evidence categories: source control history, issue tracking, and long-form documents, plus any extra source the repo's `AGENTS.md` names. You cannot predict from the question alone which one holds the answer, so the skill queries every category in parallel, then synthesizes with explicit confidence calibration. Null results from searched categories are first-class evidence about how the decision was made; report them alongside positive findings. The default is coverage, not minimalism.
+Historical context spreads across three evidence categories: source control history, issue tracking, and long-form documents, plus any extra source the repo's kstack config names. You cannot predict from the question alone which one holds the answer, so the skill queries every category in parallel, then synthesizes with explicit confidence calibration. Null results from searched categories are first-class evidence about how the decision was made; report them alongside positive findings. The default is coverage, not minimalism.
 
 ## Operating Posture
 
@@ -97,10 +97,12 @@ Capture this as seed context (file paths, symbols, commits, PR numbers, linked t
 
 ### Source map
 
+Read the repo's kstack config (`.claude/kstack/config.md` at the repo root) first. Its "Tracker" and "Why sources" sections say which tracker and extra sources this repo has. No config: record the tracker and the extra sources as gaps, and say that `/kstack:setup-kstack` writes the config.
+
 1. Source control history: `git` + `gh`
-2. Issue / ticket tracker: Linear via the Linear MCP. If the repo uses no issue tracker, or the MCP is not connected, record it as a gap.
+2. Issue / ticket tracker: the config's tracker, with the `tracker.md` playbook. Kind `none`, or the tool is not connected: record it as a gap.
 3. Long-form documents: in-repo docs (`AGENTS.md`, architecture and vision docs and their decisions logs, `docs/**`, READMEs)
-4. Sources the repo's `AGENTS.md` names for a design (a gist, a reference project): one investigator each, with the `docs.md` playbook. Other reference projects are not sources unless `AGENTS.md` says so.
+4. Sources the config's "Why sources" names (a gist, a spec, a reference project): one investigator each, with the `docs.md` playbook. Other reference projects are not sources unless the config names them.
 
 Aim for a complete **coverage map**, not a minimal one. A null result from an issue tracker is evidence the decision was not ticketed, a useful fact in itself. Document the null, don't skip the search.
 
@@ -122,18 +124,18 @@ Each entry lists what the category physically contains and the kind of "why" it 
 
 1. **Source control investigator**. Git history, `gh` for PRs, code comments, tests. Always spawn; the only guaranteed source. Best at surfacing *implementation-time rationale captured during review*. PR descriptions stating the problem, review threads debating alternatives, inline comments encoding non-obvious constraints, test names that encode motivating edge cases, and commit messages linking tickets or incidents. Most trustworthy because it ties directly to the diff that shipped.
 
-2. **Issue / ticket tracker investigator** (Linear via the Linear MCP). Issues, comments, parent issues, project docs. Best at surfacing *the product forcing function*: what the user needed, the "done when" list, scope changes recorded in comments, and the parent goal. Strongest when the why is outside the code.
+2. **Issue / ticket tracker investigator** (the config's tracker). Issues, comments, parent issues, project docs. Best at surfacing *the product forcing function*: what the user needed, the "done when" list, scope changes recorded in comments, and the parent goal. Strongest when the why is outside the code.
 
 3. **Long-form documents investigator** (in-repo docs: `AGENTS.md`, architecture and vision docs, decisions logs, `docs/**`). Specs, plans, decisions logs, principles, non-goals. Best at surfacing *long-form design rationale*. Problem statements, "alternatives considered" and "rejected approaches" sections, decisions log rows with the rejected option and the reason. Where the why is written out before it becomes code.
 
-4. **Named-source investigator** (one per source the repo's `AGENTS.md` names for a design, with the `docs.md` playbook). Best at surfacing *the design the code was built to follow*: the reference the repo treats as the source of truth. Strongest when the code ports or adapts that design.
+4. **Named-source investigator** (one per source the config's "Why sources" names, with the `docs.md` playbook). Best at surfacing *the design the code was built to follow*: the reference the repo treats as the source of truth. Strongest when the code ports or adapts that design.
 
 ### When to skip an investigator
 
 Only skip with an **explicit, written justification** that goes in the final "Sources Consulted" section. Two valid reasons:
 
 - **No tool is available for that category** in this environment. Flag this as a gap, not a choice. Example: "Issue tracker skipped. The Linear MCP is not connected, so issues were not searchable."
-- **The source is provably irrelevant**, not just "probably irrelevant." A high bar. Example: "Named-source investigator skipped. AGENTS.md names no reference for this module." Not "the reference probably does not cover this."
+- **The source is provably irrelevant**, not just "probably irrelevant." A high bar. Example: "Named-source investigator skipped. The kstack config names no source for this module." Not "the reference probably does not cover this."
 
 "It's a small change, the issue tracker won't have anything" is **not** sufficient, and neither is "I doubt long-form docs would have this." Run the search; let the null result speak. The cost of an investigator returning empty is one subagent. The cost of missing a design doc that actually exists is a wrong answer.
 
@@ -180,7 +182,7 @@ Example:
 - Source control (git/gh): `git log --follow src/sync/retry.ts`, PRs #107, #93. Found PR #107 introduced exponential backoff and linked ENG-42.
 - Issue tracker (Linear MCP): viewed ENG-42 and searched issues for "retry". Found the parent issue but no discussion of backoff parameters.
 - Long-form docs (in-repo): searched `AGENTS.md`, `ARCHITECTURE.md` and its decisions log for "retry". Found decisions log row 14: backoff chosen over a fixed delay to avoid rate limits.
-- Named sources: skipped. AGENTS.md names no reference for this module.
+- Named sources: skipped. The kstack config names no source for this module.
 
 After the Sources Consulted block, if the user's `why` question is a precursor to actually changing this code, convert the lineage findings into a Preserve / Change / Avoid / Risk constraint set suitable for planning the change.
 

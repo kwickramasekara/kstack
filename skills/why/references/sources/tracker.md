@@ -1,4 +1,4 @@
-# Linear Tickets
+# Issue tracker
 
 ## What this source contains
 
@@ -10,16 +10,16 @@
 - Status updates that explain scope changes
 - Attachments and linked GitHub PRs
 
-Linear is where the product/business context often lives: the "we're doing this because customer X asked" or "this is for the Q3 compliance initiative" layer.
+The tracker is where the product/business context often lives: the "we're doing this because customer X asked" or "this is for the Q3 compliance initiative" layer.
 
 ## How to search it
 
-Use the Linear MCP.
+Use the tool the repo's kstack config names in its Tracker "Read" line. For Linear that is the Linear MCP (`get_issue`, `list_issues`, `get_project`). For GitHub Issues it is `gh issue view <N> --comments` and `gh issue list --search`.
 
-1. **Start with linked tickets.** If the seed commits or PRs reference ticket IDs (e.g., `ENG-1234`, `[BUG-567]`), fetch those first with `get_issue`. Read the full issue including comments.
-2. **List related issues by keyword.** Use `list_issues` with text search for the feature name, key symbol, or business term. Try multiple phrasings.
+1. **Start with linked tickets.** If the seed commits or PRs reference ticket IDs (e.g., `ENG-1234`, `[BUG-567]`, `#123`), fetch those first. Read the full issue including comments.
+2. **List related issues by keyword.** Search for the feature name, key symbol, or business term. Try multiple phrasings.
 3. **Walk the issue tree.** If you land on a sub-issue, fetch its parent. Sub-issues are tactical; parents often carry the "why."
-4. **Read project docs.** If the issue belongs to a project, use `get_project` and check attached docs. Project-level documents are where specs and rationale are most often captured.
+4. **Read project docs.** If the issue belongs to a project or milestone, read its description and attached docs. Project-level documents are where specs and rationale are most often captured.
 5. **Check labels and milestones.** Labels hint at the category of motivation (customer-request, incident-followup, compliance). Milestones tie work to deadlines, which often reveal motivation.
 
 ## What good evidence looks like here

@@ -8,7 +8,7 @@ Most durable long-form context lives in the repo itself:
 - Architecture and vision docs (for example `ARCHITECTURE.md`, `VISION.md`), and any decisions log in them
 - `docs/**`: design docs, plans, notes
 - READMEs next to the code they describe
-- Sources that `AGENTS.md` names as the reference for a design (a gist, a reference project)
+- Sources the kstack config names under "Why sources" (a gist, a reference project)
 
 Long-form "why" often lives here before it becomes code: problem statements, alternatives considered, constraints, and rejected approaches.
 

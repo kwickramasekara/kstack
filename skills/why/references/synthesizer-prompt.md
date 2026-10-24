@@ -4,7 +4,7 @@ Build the synthesizer's prompt from this template; fill in the placeholders.
 
 ---
 
-You are answering a "why" question about a piece of code by synthesizing findings from multiple investigators who searched different historical sources (source control, issue / ticket tracker, long-form documents, sources the repo's AGENTS.md names, and code comments). Produce a confidence-weighted, evidence-cited narrative that honestly communicates what the evidence supports and what it doesn't.
+You are answering a "why" question about a piece of code by synthesizing findings from multiple investigators who searched different historical sources (source control, issue / ticket tracker, long-form documents, sources the repo's kstack config names, and code comments). Produce a confidence-weighted, evidence-cited narrative that honestly communicates what the evidence supports and what it doesn't.
 
 ## The Question
 
@@ -101,9 +101,9 @@ Be specific. "We searched the issue tracker for [query1], [query2], [query3] and
 Bulleted list of what was actually searched, so the user can judge coverage and redirect. Format:
 
 - **Source control history**: {file paths}, {number of commits reviewed}, PRs #{numbers}, and code comments searched. Or "Not searched. This should not happen because git and `gh` are always expected."
-- **Issue / ticket tracker**: {ticket IDs and keyword searches}. Or "Not searched. No matching MCP available in this environment."
+- **Issue / ticket tracker**: {ticket IDs and keyword searches}. Or "Not searched. <the reason: tracker `none`, or its tool is not connected>."
 - **Long-form documents**: {doc paths, sections and search queries}.
-- **Named sources**: {each source the repo's AGENTS.md names, and what was searched}. Or "Skipped. AGENTS.md names no source for this code."
+- **Named sources**: {each source the kstack config names, and what was searched}. Or "Skipped. The kstack config names no source for this code."
 
 ### Confidence Summary
 
