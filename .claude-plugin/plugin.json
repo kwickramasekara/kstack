@@ -2,7 +2,7 @@
   "name": "kstack",
   "displayName": "KStack",
   "description": "Personal engineering workflows for any repo: cruise-control playbooks from ticket to commit, adversarial review, decisions, principles, and skills to explore, explain history, check blast radius, test first, clean up and write.",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "author": {
     "name": "Keith Wickramasekara"
   },
