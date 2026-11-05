@@ -67,6 +67,7 @@ The principles live in `principles/`, one file each, with their triggers in `pri
 | `typescript-best-practices` | Reading or editing `.ts` or `.tsx` files. It loads by itself on those files (`paths`). |
 | `technical-writing` | Docs, RFCs, commit messages. |
 | `unslop` | Cut AI tells from any writing. |
+| `eli5` | Explain like I'm five. No argument: your last message. With one: that thing (`/kstack:eli5 the race condition`). Only you can run it. |
 
 ## Review
 
@@ -93,4 +94,4 @@ ln -s <path to kstack>/opencode/agents/kstack-adversary.md ~/.config/opencode/ag
 ## Copies
 
 - `principles/` are pstack's `principle-*` skills in pwstack's folder format, plus the two of ours. `typescript-best-practices` is pstack's skill with kstack links, and its "Structured telemetry" row is rewritten as "Useful logs" (console logging is allowed). Update them from pstack by hand.
-- `how`, `blast-radius`, `code-cleanup`, `tdd`, `technical-writing`, `unslop`, the review agents and the review skills are copies of the pwstack ones, made general. A fix in one copy must be made in the other by hand.
+- `how`, `blast-radius`, `code-cleanup`, `tdd`, `technical-writing`, `unslop`, `eli5`, the review agents and the review skills are copies of the pwstack ones, made general. A fix in one copy must be made in the other by hand.
