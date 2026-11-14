@@ -23,12 +23,7 @@ It writes `.claude/kstack/config.md`: the issue tracker, the checks command, how
 
 ## Update
 
-The install is a cache pinned to a git commit and a version. Uncommitted edits do not reach it. To pick up changes, bump `version` in `.claude-plugin/plugin.json`, commit, then run from the repo:
-
-```bash
-claude plugin marketplace update kstack
-claude plugin update kstack@kstack --scope local
-```
+A marketplace added from a local path loads kstack from that folder, not from a cached copy ([plugin loading](https://code.claude.com/docs/en/plugins/loading.md#in-place-and-copied-plugins)). Every repo and worktree that uses kstack picks up changes, uncommitted edits included, at its next session start or after `/reload-plugins`. You do not need to bump `version` or run `claude plugin update` for changes to load.
 
 ## Cruise control
 
